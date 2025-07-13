@@ -1,46 +1,27 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { PlayerProvider } from './context/PlayerContext';
-import Sidebar from './components/Sidebar';
-import Header from './components/Header';
-import Player from './components/Player';
-import Home from './pages/Home';
-import Search from './pages/Search';
-import Library from './pages/Library';
-import Playlist from './pages/Playlist';
-import LikedSongs from './pages/LikedSongs';
-import CreatePlaylist from './pages/CreatePlaylist';
+import { SpotifyAuthProvider } from './context/SpotifyAuthContext';
+import { SpotifyPlayerProvider } from './context/SpotifyPlayerContext';
+import LoginScreen from './components/LoginScreen';
+import MainApp from './components/MainApp';
 
 function App() {
   return (
-    <PlayerProvider>
-      <Router>
-        <div className="h-screen bg-spotify-gray text-white flex flex-col">
-          <div className="flex flex-1 overflow-hidden">
-            {/* Sidebar */}
-            <Sidebar />
-            
-            {/* Main Content */}
-            <div className="flex-1 flex flex-col overflow-hidden">
-              <Header />
-              <main className="flex-1 overflow-y-auto bg-gradient-to-b from-spotify-darkGray to-spotify-gray">
-                <Routes>
-                  <Route path="/" element={<Home />} />
-                  <Route path="/search" element={<Search />} />
-                  <Route path="/library" element={<Library />} />
-                  <Route path="/playlist/:id" element={<Playlist />} />
-                  <Route path="/liked" element={<LikedSongs />} />
-                  <Route path="/create-playlist" element={<CreatePlaylist />} />
-                </Routes>
-              </main>
+    <SpotifyAuthProvider>
+      <PlayerProvider>
+        <SpotifyPlayerProvider>
+          <Router>
+            <div className="h-screen bg-spotify-gray text-white">
+              <Routes>
+                <Route path="/login" element={<LoginScreen />} />
+                <Route path="/*" element={<MainApp />} />
+              </Routes>
             </div>
-          </div>
-          
-          {/* Player */}
-          <Player />
-        </div>
-      </Router>
-    </PlayerProvider>
+          </Router>
+        </SpotifyPlayerProvider>
+      </PlayerProvider>
+    </SpotifyAuthProvider>
   );
 }
 
