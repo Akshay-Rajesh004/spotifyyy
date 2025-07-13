@@ -38,7 +38,7 @@ interface SpotifyPlaylist {
   uri: string;
 }
 
-const API_BASE_URL = import.meta.env.VITE_APP_BACKEND_URL || process.env.REACT_APP_BACKEND_URL || 'http://localhost:8001';
+const API_BASE_URL = import.meta.env.VITE_REACT_APP_BACKEND_URL || 'http://localhost:8001';
 
 const Search: React.FC = () => {
   const { accessToken } = useSpotifyAuth();
